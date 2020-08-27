@@ -1,10 +1,10 @@
 import React, { useContext, useState, useMemo } from 'react';
 
 // context
-import { StoreContext } from '../../context/Store';
+import { StoreContext } from '../../context/store';
 
 // type
-import { createUser } from '../../context/Store/actions';
+import { createUser } from '../../context/store/actions';
 
 function App() {
   const [state, dispatch] = useContext(StoreContext);

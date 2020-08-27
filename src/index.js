@@ -4,7 +4,7 @@ import App from './views/App';
 import * as serviceWorker from './serviceWorker';
 
 // context
-import StoreContext from './context/Store';
+import StoreContext from './context/store';
 
 // css
 import './index.css';
