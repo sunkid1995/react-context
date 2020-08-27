@@ -4,7 +4,7 @@ import React, { useContext, useState, useMemo } from 'react';
 import { StoreContext } from '../../context/Store';
 
 // type
-import { CREATE_USER } from '../../context/Store/action';
+import { createUser } from '../../context/Store/actions';
 
 function App() {
   const [state, dispatch] = useContext(StoreContext);
@@ -18,10 +18,7 @@ function App() {
   };
 
   const onCreate = () => {
-    return dispatch({
-      type: CREATE_USER,
-      payload: user,
-    })
+    return dispatch(createUser(user))
   };
 
   const renderTable = useMemo(() => {

@@ -1,5 +1,5 @@
 // action
-import { CREATE_USER } from './action';
+import { CREATE_USER } from '../types';
 
 export default (state, action) => {
   switch(action.type) {

@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 
 // reducer
 import combineReducers from '../combineReducers';
-import reducer from './reducer';
+import { userReducer } from './reducers';
 
 const PLAIN_DATA = { data: [], error: undefined, loading: false };
 
@@ -11,7 +11,7 @@ const INIT_STATE = {
 }
 
 const allReducers = {
-  users: [reducer, INIT_STATE],
+  users: [userReducer, INIT_STATE],
 }
 
 const Store = ({ children }) => {
