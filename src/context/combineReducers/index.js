@@ -2,7 +2,7 @@
 
 export default function combineReducers(reducers) {
   if (!reducers) {
-    throw new Error('The function combineReducers for hooks can a reducuers.');
+    throw new Error('The function combineReducers for hooks can a reducers.');
   }
 
   const reducersKeys = Object.keys(reducers);
@@ -47,4 +47,4 @@ export default function combineReducers(reducers) {
   };
 
   return [dispatch, globalState]
-} 
+}
