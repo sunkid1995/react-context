@@ -1,0 +1,28 @@
+# EditorConfig by https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Set default charset
+charset = utf-8
+
+# space size
+indent_size = 2
+indent_style = space
+
+
+# set to true to remove any whitespace characters preceding newline characters and false to ensure it doesn't.
+max_line_length = 80
+trim_trailing_whitespace = true
+
+[*.md]
+max_line_length = 0
+trim_trailing_whitespace = false
+
+[COMMIT_EDITMSG]
+max_line_length = 0

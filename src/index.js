@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './views/App';
+
+// containers
+import App from './containers/app';
+
+// service worker
 import * as serviceWorker from './serviceWorker';
 
 // context

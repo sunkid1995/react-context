@@ -1,10 +1,13 @@
 import React, { useReducer } from 'react';
 
+// middleware
+import { applyMiddleware } from './middleware';
+
 // reducer
 import combineReducers from '../combineReducers';
 import { userReducer } from './reducers';
 
-const PLAIN_DATA = { data: [], error: undefined, loading: false };
+const PLAIN_DATA = { data: undefined, errors: undefined, loading: false };
 
 const INIT_STATE = {
   dataList: PLAIN_DATA
@@ -18,8 +21,13 @@ const Store = ({ children }) => {
   const [reducers, store] = combineReducers(allReducers);
   const [state, dispatch] = useReducer(reducers, store);
 
+  /**
+   * Make dispatch with middleware
+   */
+  const dispatchAsync = applyMiddleware(dispatch);
+  
   return (
-    <StoreContext.Provider value={[state, dispatch]}>
+    <StoreContext.Provider value={[state, dispatchAsync]}>
       {children}
     </StoreContext.Provider>  
   );

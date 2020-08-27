@@ -1,14 +1,19 @@
-import React, { useContext, useState, useMemo } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 
 // context
 import { StoreContext } from '../../context/store';
 
 // type
-import { createUser } from '../../context/store/actions';
+import { createUser, getUser } from '../../context/store/actions';
 
 function App() {
   const [state, dispatch] = useContext(StoreContext);
   const [user, setUser] = useState({});
+  
+  useEffect(() => {
+    dispatch(getUser())
+  }, []);
 
   const handleInputChange = (key, event) => {
     return setUser({
@@ -22,7 +27,7 @@ function App() {
   };
 
   const renderTable = useMemo(() => {
-    if (!state.users.dataList.data.length) return null;
+    if (!state.users.dataList.data) return null;
 
     return (
       <table>
