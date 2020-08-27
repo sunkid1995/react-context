@@ -25,7 +25,7 @@ function App() {
   };
 
   const renderTable = useMemo(() => {
-    if (!state.dataList.data.length) return null;
+    if (!state.users.dataList.data.length) return null;
 
     return (
       <table>
@@ -37,7 +37,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {state.dataList.data.map((item, index) => {
+          {state.users.dataList.data.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.name}</td>
@@ -49,7 +49,7 @@ function App() {
         </tbody>
       </table>
     )
-  }, [state.dataList]);
+  }, [state.users.dataList]);
 
   return (
     <div className="App">
