@@ -1,7 +1,7 @@
-import applyMiddleware from './applyMiddleware';
+import promiseMiddleware from './promiseMiddleware';
 import logger from './logger';
 
 export {
-  applyMiddleware,
+  promiseMiddleware,
   logger
 }

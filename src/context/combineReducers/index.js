@@ -46,5 +46,5 @@ export default function combineReducers(reducers) {
     }
   };
 
-  return [dispatch, globalState]
+  return [globalState, dispatch]
 }

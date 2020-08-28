@@ -1,11 +1,14 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 
 // middleware
-import { applyMiddleware, logger } from './middleware';
+import { promiseMiddleware, logger } from './middleware';
 
 // reducer
 import combineReducers from '../combineReducers';
 import { userReducer } from './reducers';
+
+// hooks
+import useEnhancedReducer from '../../hooks/useEnhancedReducer'
 
 // constants
 import { DEV_MODE } from '../../constants';
@@ -16,21 +19,21 @@ const INIT_STATE = {
   dataList: PLAIN_DATA
 }
 
+const allMiddlewares = [
+  promiseMiddleware,
+  ...(DEV_MODE ? [logger] : [])
+]
+
 const allReducers = {
   users: [userReducer, INIT_STATE],
 }
 
 const Store = ({ children }) => {
-  const [reducers, store] = combineReducers(allReducers);
-  const [state, dispatch] = useReducer(DEV_MODE ? logger(reducers) : reducers, store);
-
-  /**
-   * Make dispatch with middleware
-   */
-  const dispatchAsync = applyMiddleware(dispatch);
+  const [store, reducers] = combineReducers(allReducers);
+  const [state, dispatch] = useEnhancedReducer(reducers, store, allMiddlewares);
 
   return (
-    <StoreContext.Provider value={[state, dispatchAsync]}>
+    <StoreContext.Provider value={[state, dispatch]}>
       {children}
     </StoreContext.Provider>
   );
