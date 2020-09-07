@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useContext } from 'react';
 
 // middleware
 import { promiseMiddleware, logger } from './middleware';
@@ -8,7 +9,10 @@ import combineReducers from '../combineReducers';
 import { userReducer } from './reducers';
 
 // hooks
-import useEnhancedReducer from '../../hooks/useEnhancedReducer'
+import useEnhancedReducer from '../../hooks/useEnhancedReducer';
+
+// helper
+import { mapStateToProps, mapDispatchToProps } from '../helper';
 
 // constants
 import { DEV_MODE } from '../../constants';
@@ -39,6 +43,24 @@ const Store = ({ children }) => {
   );
 };
 
-export const StoreContext = React.createContext(INIT_STATE);
+export const StoreContext = React.createContext({});
+
+export const useConnect = (sToProps, dToProps) => {
+  return WrappedComponent => props => {
+    const [state, dispatch] = useContext(StoreContext);
+
+    const composeProps = {
+      ...props,
+      ...mapStateToProps(sToProps, state),
+      ...mapDispatchToProps(dToProps, dispatch),
+    }
+
+    return (
+      <WrappedComponent
+        {...composeProps}
+      />
+    )
+  }
+};
 
 export default Store;

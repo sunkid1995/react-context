@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 // context
-import { StoreContext } from '../../context/store';
+import { useConnect } from '../../context/store';
 
 // type
 import { createUser, getUser } from '../../context/store/actions';
 
-function App() {
-  const [state, dispatch] = useContext(StoreContext);
+function App(props) {
+  const { getAllusers, users, createNewUser } = props;
+
   const [user, setUser] = useState({});
-  
+
   useEffect(() => {
-    dispatch(getUser())
+    getAllusers();
   }, []);
 
   const handleInputChange = (key, event) => {
@@ -23,11 +24,11 @@ function App() {
   };
 
   const onCreate = () => {
-    return dispatch(createUser(user))
+    return createNewUser(user);
   };
 
   const renderTable = useMemo(() => {
-    if (!state.users.dataList.data) return null;
+    if (!users.data) return null;
 
     return (
       <table>
@@ -39,7 +40,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {state.users.dataList.data.map((item, index) => {
+          {users.data.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.name}</td>
@@ -51,7 +52,7 @@ function App() {
         </tbody>
       </table>
     )
-  }, [state.users.dataList]);
+  }, [users]);
 
   return (
     <div className="App">
@@ -62,7 +63,7 @@ function App() {
             onChange={e => handleInputChange('name', e)}
           />
           <label>Age:</label>
-          <input 
+          <input
             onChange={e => handleInputChange('age', e)}
           />
           <label>City:</label>
@@ -70,7 +71,7 @@ function App() {
             onChange={e => handleInputChange('city', e)}
           />
         </form>
-        <button 
+        <button
           style={{ marginTop: 10, float: 'right' }}
           onClick={onCreate}
         >
@@ -85,4 +86,17 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    users: state.users.dataList,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllusers: () => dispatch(getUser()),
+    createNewUser: payload => dispatch(createUser(payload))
+  }
+}
+
+export default useConnect(mapStateToProps, mapDispatchToProps)(App);
